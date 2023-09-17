@@ -6,3 +6,5 @@
 /www/**
 .DS_Store
 /buildtest
+/data/mysql/*
+!/data/mysql/.gitkeep

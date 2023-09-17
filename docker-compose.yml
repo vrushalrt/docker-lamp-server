@@ -48,6 +48,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     container_name: "${COMPOSE_PROJECT_NAME}-phpmyadmin"
+    restart: "always"
     links:
       - database
     environment:
@@ -68,6 +69,7 @@ services:
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
   redis:
     container_name: "${COMPOSE_PROJECT_NAME}-redis"
+    restart: "always"
     image: redis:latest
     ports:
       - "127.0.0.1:${HOST_MACHINE_REDIS_PORT}:6379"
