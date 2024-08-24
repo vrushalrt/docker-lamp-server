@@ -12,7 +12,8 @@ services:
     links:
       - database
     volumes:
-      - ${DOCUMENT_ROOT-./www}:/var/www/html:rw
+      - ${DOCUMENT_ROOT-./www}:/var/www/html:rw                 # Default Docker linux mount
+      - //c/ServerWWW/www/projects:/var/www/html/projects:rw    # Windows directory mount
       - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
       - ${SSL_DIR-./config/ssl}:/etc/apache2/ssl/
       - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
@@ -40,13 +41,14 @@ services:
       - ${MYSQL_INITDB_DIR-./config/initdb}:/docker-entrypoint-initdb.d
       - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
       - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:latest
     container_name: "${COMPOSE_PROJECT_NAME}-phpmyadmin"
     restart: "always"
     links:
